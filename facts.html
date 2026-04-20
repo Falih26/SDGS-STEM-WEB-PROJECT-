@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fakta & Data — SDG 9 Indonesia</title>
+  <meta name="description" content="Data dan fakta tentang akses internet, infrastruktur TIK, dan kesenjangan digital di Indonesia." />
+  <link rel="stylesheet" href="sdg.css" />
+  <style>
+    .fact-strip {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .fact-strip:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+    .fact-num-col {
+      background: linear-gradient(160deg, var(--primary) 0%, var(--primary-dark) 100%);
+      padding: 36px 32px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-width: 180px;
+      position: relative; overflow: hidden;
+    }
+    .fact-num-col::before {
+      content: '';
+      position: absolute; top: -20px; right: -20px;
+      width: 80px; height: 80px;
+      background: rgba(255,255,255,0.06); border-radius: 50%;
+    }
+    .fact-num-col .big { font-family: var(--font-display); font-size: 3rem; font-weight: 800; letter-spacing: -2px; color: #fff; line-height: 1; }
+    .fact-num-col .unit { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--primary-light); margin-top: 4px; }
+    .fact-num-col .icon { font-size: 1.5rem; margin-bottom: 8px; }
+    .fact-body { padding: 32px 36px; display: flex; flex-direction: column; justify-content: center; }
+    .fact-body h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.3px; }
+    .fact-body p { font-size: 14px; color: var(--text-muted); line-height: 1.72; }
+    .fact-body .fact-source { font-size: 12px; color: var(--text-light); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-light); }
+
+    .fact-strip.alt .fact-num-col { background: linear-gradient(160deg, var(--navy) 0%, #1A3550 100%); }
+    .fact-strip.teal .fact-num-col { background: linear-gradient(160deg, #0891B2 0%, var(--primary) 100%); }
+    .fact-strip.green .fact-num-col { background: linear-gradient(160deg, var(--green) 0%, #065F46 100%); }
+    .fact-strip.sky .fact-num-col { background: linear-gradient(160deg, #0284C7 0%, var(--navy) 100%); }
+
+    .divide-visual {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+    }
+    .divide-visual h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
+    .divide-visual p { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
+    .divide-bar-row { margin-bottom: 20px; }
+    .divide-bar-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .divide-bar-label span:first-child { font-size: 14px; font-weight: 600; }
+    .divide-bar-label span:last-child { font-family: var(--font-display); font-size: 1rem; font-weight: 800; color: var(--primary); }
+    .divide-bar-track { height: 10px; background: var(--bg-subtle); border-radius: 99px; overflow: hidden; }
+    .divide-bar-fill { height: 100%; border-radius: 99px; transition: width 1.2s cubic-bezier(0.16,1,0.3,1); }
+    .fill-urban { background: linear-gradient(90deg, var(--primary), var(--teal)); }
+    .fill-rural { background: linear-gradient(90deg, var(--sky), var(--primary-light)); }
+    .fill-java { background: linear-gradient(90deg, var(--green), #10B981); }
+    .fill-outer { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
+    .fill-youth { background: linear-gradient(90deg, var(--cyan), var(--sky)); }
+
+    .ref-section { background: var(--bg-subtle); border-radius: var(--radius); padding: 36px 40px; }
+    .ref-section h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 800; margin-bottom: 20px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+    .ref-item { font-size: 13px; color: var(--text-muted); line-height: 1.7; margin-bottom: 12px; padding-left: 20px; position: relative; }
+    .ref-item::before { content: ''; position: absolute; left: 0; top: 9px; width: 8px; height: 2px; background: var(--border); border-radius: 2px; }
+
+    @media (max-width: 680px) {
+      .fact-strip { grid-template-columns: 1fr; }
+      .fact-num-col { min-width: unset; padding: 24px; flex-direction: row; gap: 16px; }
+      .fact-body { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand">
+      <div class="navbar-logo">SDG</div>
+      <span class="navbar-site-name">SDG <span>9</span> Indonesia</span>
+    </a>
+    <nav class="navbar-nav">
+      <a href="index.html">Beranda</a>
+      <a href="facts.html" class="active">Fakta & Data</a>
+      <a href="target.html">Target 9.c</a>
+      <a href="empathy.html">Empati</a>
+      <a href="ideation.html">Ideasi</a>
+      <a href="prototype.html">Prototipe</a>
+      <a href="testing.html">Pengujian</a>
+      <a href="reflection.html">Refleksi</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Beranda</a>
+  <a href="facts.html" class="active">Fakta & Data</a>
+  <a href="target.html">Target 9.c</a>
+  <a href="empathy.html">Empati & Riset</a>
+  <a href="ideation.html">Ideasi</a>
+  <a href="prototype.html">Prototipe</a>
+  <a href="testing.html">Pengujian</a>
+  <a href="reflection.html">Refleksi</a>
+</div>
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-header-step">📊 Fakta & Data</div>
+    <h1>SDG 9 di Indonesia:<br>Fakta dan Data</h1>
+    <p>Data terkini tentang penetrasi internet, infrastruktur digital, dan kesenjangan akses TIK di seluruh wilayah Indonesia.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="section-label fade-up">5 Fakta Kunci</div>
+    <h2 class="section-title fade-up fade-up-d1">Potret Digital Indonesia</h2>
+    <p class="section-desc fade-up fade-up-d2" style="margin-bottom: 48px;">Data ini bersumber dari lembaga resmi dan mencerminkan kondisi terkini akses TIK di Indonesia.</p>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+
+      <div class="fact-strip fade-up">
+        <div class="fact-num-col">
+          <div class="icon">🌐</div>
+          <div class="big">78,2</div>
+          <div class="unit">% pengguna internet</div>
+        </div>
+        <div class="fact-body">
+          <h3>Penetrasi Internet Indonesia Mencapai 78,2% pada 2024</h3>
+          <p>Berdasarkan survei APJII 2024, sebanyak 221,5 juta dari 278,7 juta penduduk Indonesia telah mengakses internet — meningkat dari 77,02% pada tahun sebelumnya. Angka ini menempatkan Indonesia di atas rata-rata Asia Tenggara, namun masih menyisakan sekitar 57 juta warga yang belum terjangkau layanan digital.</p>
+          <p class="fact-source">Sumber: Asosiasi Penyelenggara Jasa Internet Indonesia (APJII). (2024). <em>Survei Penetrasi Internet Indonesia 2024</em>. Jakarta: APJII.</p>
+        </div>
+      </div>
+
+      <div class="fact-strip alt fade-up fade-up-d1">
+        <div class="fact-num-col">
+          <div class="icon">🏙️</div>
+          <div class="big">93</div>
+          <div class="unit">% vs 68% desa</div>
+        </div>
+        <div class="fact-body">
+          <h3>Kesenjangan Digital antara Kota dan Desa Masih Lebar</h3>
+          <p>Akses internet di wilayah perkotaan mencapai 93%, sedangkan di pedesaan hanya 68% — selisih 25 poin persentase. Kesenjangan ini berdampak langsung pada ketimpangan akses pendidikan daring, layanan kesehatan digital, dan peluang ekonomi berbasis internet bagi masyarakat pedesaan yang berjumlah lebih dari 120 juta jiwa.</p>
+          <p class="fact-source">Sumber: Badan Pusat Statistik. (2024). <em>Statistik Telekomunikasi Indonesia 2023</em>. Jakarta: BPS RI.</p>
+        </div>
+      </div>
+
+      <div class="fact-strip teal fade-up fade-up-d2">
+        <div class="fact-num-col">
+          <div class="icon">💰</div>
+          <div class="big">Rp 300</div>
+          <div class="unit">ribu/bln rata-rata</div>
+        </div>
+        <div class="fact-body">
+          <h3>Biaya Internet Masih Memberatkan Kelompok Berpenghasilan Rendah</h3>
+          <p>Rata-rata pengeluaran untuk paket internet berkisar Rp 200.000–400.000 per bulan, atau sekitar 5–10% dari upah minimum regional di banyak daerah. Bagi keluarga prasejahtera, biaya ini menjadi hambatan utama untuk tetap terhubung secara digital. ITU (2023) mencatat bahwa biaya internet Indonesia masih di atas ambang keterjangkauan global sebesar 2% dari GNI per kapita.</p>
+          <p class="fact-source">Sumber: International Telecommunication Union (ITU). (2023). <em>Measuring digital development: Facts and figures 2023</em>. Geneva: ITU.</p>
+        </div>
+      </div>
+
+      <div class="fact-strip green fade-up fade-up-d3">
+        <div class="fact-num-col">
+          <div class="icon">📱</div>
+          <div class="big">95,4</div>
+          <div class="unit">% akses via HP</div>
+        </div>
+        <div class="fact-body">
+          <h3>Ponsel Pintar Mendominasi, Namun Infrastruktur Belum Merata</h3>
+          <p>Sebanyak 95,4% pengguna internet Indonesia mengakses melalui ponsel pintar. Namun demikian, masih terdapat 12.548 desa "blank spot" (tanpa sinyal seluler) per data Kemenkominfo 2023. Program pemerintah seperti Palapa Ring telah menghubungkan wilayah-wilayah terpencil, tetapi last-mile connectivity — koneksi dari infrastruktur utama ke rumah-rumah warga — masih menjadi tantangan besar.</p>
+          <p class="fact-source">Sumber: Kementerian Komunikasi dan Informatika RI. (2023). <em>Laporan Tahunan Infrastruktur Digital Indonesia 2023</em>. Jakarta: Kemenkominfo.</p>
+        </div>
+      </div>
+
+      <div class="fact-strip sky fade-up fade-up-d4">
+        <div class="fact-num-col">
+          <div class="icon">📚</div>
+          <div class="big">64</div>
+          <div class="unit">% literasi digital</div>
+        </div>
+        <div class="fact-body">
+          <h3>Indeks Literasi Digital Nasional Baru Mencapai 3,65 dari 5</h3>
+          <p>Kementerian Kominfo dan Gerakan Nasional Literasi Digital mencatat indeks literasi digital Indonesia sebesar 3,65 (dari skala 5) pada 2023 — setara dengan sekitar 64% kecakapan digital ideal. Artinya, meskipun akses internet meningkat, kemampuan masyarakat dalam memanfaatkan teknologi secara produktif, aman, dan kritis masih perlu ditingkatkan secara signifikan.</p>
+          <p class="fact-source">Sumber: Kementerian Komunikasi dan Informatika RI & Katadata Insight Center. (2023). <em>Status Literasi Digital Indonesia 2023</em>. Jakarta: Kemenkominfo.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Visual Comparison -->
+<section class="section-sm" style="background:var(--bg-card);">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;" class="fade-up">
+      <div class="divide-visual">
+        <h3>Perbandingan Akses Internet per Wilayah</h3>
+        <p>Kesenjangan akses internet berdasarkan karakteristik wilayah (2024)</p>
+        <div class="divide-bar-row">
+          <div class="divide-bar-label"><span>Perkotaan</span><span>93%</span></div>
+          <div class="divide-bar-track"><div class="divide-bar-fill fill-urban" style="width:93%;"></div></div>
+        </div>
+        <div class="divide-bar-row">
+          <div class="divide-bar-label"><span>Pedesaan</span><span>68%</span></div>
+          <div class="divide-bar-track"><div class="divide-bar-fill fill-rural" style="width:68%;"></div></div>
+        </div>
+        <div class="divide-bar-row">
+          <div class="divide-bar-label"><span>Pulau Jawa</span><span>89%</span></div>
+          <div class="divide-bar-track"><div class="divide-bar-fill fill-java" style="width:89%;"></div></div>
+        </div>
+        <div class="divide-bar-row">
+          <div class="divide-bar-label"><span>Indonesia Timur</span><span>58%</span></div>
+          <div class="divide-bar-track"><div class="divide-bar-fill fill-outer" style="width:58%;"></div></div>
+        </div>
+        <div class="divide-bar-row">
+          <div class="divide-bar-label"><span>Generasi Muda (15–24)</span><span>97%</span></div>
+          <div class="divide-bar-track"><div class="divide-bar-fill fill-youth" style="width:97%;"></div></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label">Ringkasan Data</div>
+        <h3 class="section-title" style="font-size:1.4rem;margin-bottom:20px;">Gambaran Umum Infrastruktur TIK</h3>
+        <div class="stat-row" style="grid-template-columns:1fr 1fr;">
+          <div class="stat-item">
+            <div class="stat-num">12.548</div>
+            <div class="stat-label">Desa blank spot tanpa sinyal</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num" style="color:var(--teal);">4G</div>
+            <div class="stat-label">Jaringan dominan di kota besar</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num" style="color:var(--green);">3,65</div>
+            <div class="stat-label">Indeks literasi digital (dari 5)</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num" style="color:#F59E0B;">57jt</div>
+            <div class="stat-label">Warga belum akses internet</div>
+          </div>
+        </div>
+        <div style="margin-top:24px;padding:20px;background:var(--primary-soft);border-radius:var(--radius-sm);border-left:3px solid var(--primary);">
+          <p style="font-size:14px;color:var(--primary-dark);line-height:1.7;"><strong>Catatan:</strong> Kesenjangan akses bukan hanya soal infrastruktur teknis, melainkan juga menyangkut kemampuan ekonomi, literasi digital, dan relevansi konten lokal bagi masyarakat yang belum terhubung.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- References -->
+<section class="section-sm">
+  <div class="container">
+    <div class="ref-section fade-up">
+      <h3>Daftar Referensi</h3>
+      <div class="ref-item">Asosiasi Penyelenggara Jasa Internet Indonesia (APJII). (2024). <em>Survei penetrasi internet Indonesia 2024</em>. Jakarta: APJII. Diakses dari https://apjii.or.id/survei</div>
+      <div class="ref-item">Badan Pusat Statistik (BPS). (2024). <em>Statistik telekomunikasi Indonesia 2023</em>. Jakarta: BPS RI. ISBN: 978-602-438-XXX-X.</div>
+      <div class="ref-item">International Telecommunication Union (ITU). (2023). <em>Measuring digital development: Facts and figures 2023</em>. Geneva: ITU Publications.</div>
+      <div class="ref-item">Kementerian Komunikasi dan Informatika RI. (2023). <em>Laporan tahunan infrastruktur digital Indonesia 2023</em>. Jakarta: Kemenkominfo. Diakses dari https://kominfo.go.id</div>
+      <div class="ref-item">Kementerian Komunikasi dan Informatika RI & Katadata Insight Center. (2023). <em>Status literasi digital Indonesia 2023</em>. Jakarta: Kemenkominfo. Diakses dari https://literasidigital.id</div>
+      <div class="ref-item">United Nations. (2015). <em>Transforming our world: The 2030 agenda for sustainable development</em> (A/RES/70/1). New York: United Nations.</div>
+      <div class="ref-item">World Bank. (2023). <em>Indonesia digital economy report: Reimagining the digital economy post-COVID-19</em>. Washington, D.C.: World Bank Group.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>SDG 9 — Indonesia</h3>
+        <p>Proyek edukasi tentang Tujuan Pembangunan Berkelanjutan nomor 9 — Target 9.c: Akses TIK yang merata di Indonesia.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Halaman</h4>
+        <a href="index.html">Beranda</a>
+        <a href="facts.html">Fakta & Data</a>
+        <a href="target.html">Target 9.c</a>
+        <a href="empathy.html">Empati & Riset</a>
+      </div>
+      <div class="footer-col">
+        <h4>Design Thinking</h4>
+        <a href="ideation.html">Ideasi</a>
+        <a href="prototype.html">Prototipe</a>
+        <a href="testing.html">Pengujian</a>
+        <a href="reflection.html">Refleksi</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Proyek SDG 9 Indonesia. Untuk keperluan edukasi.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const menu = document.getElementById('mobileMenu');
+  toggle.addEventListener('click', () => menu.classList.toggle('open'));
+  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
