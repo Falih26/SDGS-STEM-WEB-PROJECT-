@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Empati & Riset — SDG 9 Indonesia</title>
+  <link rel="stylesheet" href="sdg.css" />
+  <style>
+    /* ---- Problem Table ---- */
+    .problem-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-light);
+    }
+    .problem-table {
+      width: 100%; border-collapse: collapse;
+      background: var(--bg-card);
+      font-size: 13.5px;
+    }
+    .problem-table thead tr { background: var(--navy); }
+    .problem-table thead th {
+      padding: 16px 20px;
+      text-align: left;
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.5px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .problem-table thead th:last-child { border-right: none; }
+    .problem-table tbody tr { border-bottom: 1px solid var(--border-light); transition: background 0.15s; }
+    .problem-table tbody tr:hover { background: var(--bg-subtle); }
+    .problem-table td {
+      padding: 16px 20px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      vertical-align: top;
+      border-right: 1px solid var(--border-light);
+    }
+    .problem-table td:last-child { border-right: none; }
+    .problem-table td:first-child { color: var(--text); font-weight: 600; background: var(--bg-subtle); font-size: 13px; }
+    .col-header {
+      font-family: var(--font-display);
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 10px 20px 6px;
+      color: var(--text-muted);
+    }
+    .sol-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-display); font-size: 11px; font-weight: 800;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 99px;
+      margin-bottom: 8px;
+    }
+    .sb-gov { background: var(--primary-soft); color: var(--primary); }
+    .sb-provider { background: var(--teal-soft); color: #0891B2; }
+    .sb-starlink { background: var(--sky-soft); color: #0284C7; }
+
+    /* ---- Survey Charts ---- */
+    .survey-section { background: var(--bg-card); }
+    .survey-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .survey-card {
+      background: var(--bg);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .survey-card h4 {
+      font-family: var(--font-display);
+      font-size: 14px; font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .survey-card .q-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--primary);
+      margin-bottom: 16px;
+    }
+    .survey-card .respondents {
+      font-size: 12px; color: var(--text-light); margin-bottom: 18px;
+    }
+
+    /* Bar chart */
+    .bar-list { display: flex; flex-direction: column; gap: 12px; }
+    .bar-item {}
+    .bar-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+    .bar-meta .lbl { font-size: 13px; font-weight: 600; color: var(--text); }
+    .bar-meta .val { font-family: var(--font-display); font-size: 13px; font-weight: 800; color: var(--primary); }
+    .bar-track { height: 8px; background: var(--border-light); border-radius: 99px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 99px; transition: width 1.2s cubic-bezier(.16,1,.3,1); }
+    .bf-1 { background: linear-gradient(90deg, var(--primary), var(--teal)); }
+    .bf-2 { background: linear-gradient(90deg, var(--teal), var(--sky)); }
+    .bf-3 { background: linear-gradient(90deg, var(--green), #10B981); }
+    .bf-4 { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
+    .bf-5 { background: linear-gradient(90deg, #E11D48, #FB7185); }
+    .bf-6 { background: linear-gradient(90deg, #8B5CF6, #A78BFA); }
+
+    /* Pie / donut simple */
+    .pie-wrap { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .pie-svg { flex-shrink: 0; }
+    .pie-legend { display: flex; flex-direction: column; gap: 8px; }
+    .pie-legend-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-muted); }
+    .pie-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Scale chart */
+    .scale-bars { display: flex; align-items: flex-end; gap: 10px; height: 100px; margin-top: 12px; }
+    .scale-col { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+    .scale-bar { width: 100%; border-radius: 6px 6px 0 0; transition: height 1s ease; min-height: 4px; }
+    .scale-label { font-size: 11px; font-weight: 700; color: var(--text-muted); }
+    .scale-pct { font-family: var(--font-display); font-size: 12px; font-weight: 800; color: var(--primary); }
+
+    /* Highlight stat */
+    .key-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .key-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .key-stat .ks-num {
+      font-family: var(--font-display);
+      font-size: 2rem; font-weight: 800; letter-spacing: -1px;
+      color: var(--primary); line-height: 1; margin-bottom: 6px;
+    }
+    .key-stat .ks-label { font-size: 12px; font-weight: 600; color: var(--text-muted); line-height: 1.4; }
+
+    /* Conclusion strip */
+    .conclusion-item {
+      display: flex; gap: 20px; align-items: flex-start;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .conclusion-item.c2 { border-left-color: var(--teal); }
+    .conclusion-item.c3 { border-left-color: var(--green); }
+    .conclusion-item.c4 { border-left-color: #F59E0B; }
+    .conclusion-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .conclusion-body h4 { font-family: var(--font-display); font-size: 15px; font-weight: 800; margin-bottom: 6px; }
+    .conclusion-body p { font-size: 13.5px; color: var(--text-muted); line-height: 1.7; }
+
+    @media (max-width: 900px) {
+      .survey-grid { grid-template-columns: 1fr; }
+      .key-stat-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .key-stat-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand"><div class="navbar-logo">SDG</div><span class="navbar-site-name">SDG <span>9</span> Indonesia</span></a>
+    <nav class="navbar-nav">
+      <a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a>
+      <a href="empathy.html" class="active">Empati</a><a href="ideation.html">Ideasi</a>
+      <a href="prototype.html">Prototipe</a><a href="testing.html">Pengujian</a><a href="reflection.html">Refleksi</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a>
+  <a href="empathy.html" class="active">Empati & Riset</a><a href="ideation.html">Ideasi</a>
+  <a href="prototype.html">Prototipe</a><a href="testing.html">Pengujian</a><a href="reflection.html">Refleksi</a>
+</div>
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-header-step">🔍 Langkah 1 dari 5 — Design Thinking · Kelompok 6</div>
+    <h1>Empati & Riset:<br>Collecting Evidence</h1>
+    <p>Mengumpulkan bukti melalui survei komunitas, riset solusi yang sudah ada, dan analisis akar masalah — untuk memahami tantangan akses internet di Indonesia secara mendalam.</p>
+  </div>
+</header>
+
+<div class="dt-nav">
+  <div class="dt-nav-inner">
+    <a href="empathy.html" class="active"><span class="dt-nav-dot"></span>Empati</a>
+    <a href="ideation.html"><span class="dt-nav-dot"></span>Ideasi</a>
+    <a href="prototype.html"><span class="dt-nav-dot"></span>Prototipe</a>
+    <a href="testing.html"><span class="dt-nav-dot"></span>Pengujian</a>
+    <a href="reflection.html"><span class="dt-nav-dot"></span>Refleksi</a>
+  </div>
+</div>
+
+<!-- ====== SECTION 1: MASALAH & SOLUSI YANG ADA ====== -->
+<section class="section">
+  <div class="container">
+    <div class="section-label fade-up">Apa Masalah yang Diteliti?</div>
+    <h2 class="section-title fade-up fade-up-d1">Definisi Masalah Utama</h2>
+    <div class="highlight-block fade-up fade-up-d2" style="margin-bottom:48px;">
+      <h3>Masalah yang Kami Teliti</h3>
+      <p>Secara signifikan meningkatkan akses terhadap teknologi informasi dan komunikasi, dan mengusahakan penyediaan akses universsal dan terjangkau Internet di negara-negara kurang berkembang pada tahun 2020.</p>
+    </div>
+
+    <div class="section-label fade-up">Solusi yang Sudah Ada</div>
+    <h2 class="section-title fade-up fade-up-d1" style="margin-bottom:8px;">Apa / Siapa / Bagaimana Masalah Ini Sudah Diselesaikan?</h2>
+    <p class="section-desc fade-up fade-up-d2" style="margin-bottom:32px;">Tiga solusi alternatif yang dapat mencakup aplikasi, program pemerintah, atau produk alternatif.</p>
+
+    <div class="problem-table-wrap fade-up fade-up-d3">
+      <table class="problem-table">
+        <thead>
+          <tr>
+            <th style="min-width:180px;">Aspek Perbandingan</th>
+            <th>
+              <span class="sol-badge sb-gov">Solusi 1</span><br>
+              Program BAKTI Kominfo (Pemerintah)
+            </th>
+            <th>
+              <span class="sol-badge sb-provider">Solusi 2</span><br>
+              Provider Telekomunikasi (Contoh: Telkomsel/Indosat)
+            </th>
+            <th>
+              <span class="sol-badge sb-starlink">Solusi 3</span><br>
+              Starlink (SpaceX)
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Apa yang mereka sediakan? — spesifik</td>
+            <td>Penyediaan menara BTS dan akses internet gratis di wilayah 3T (Terdepan, Terluar, Tertinggal) melalui satelit SATRIA-1.</td>
+            <td>Paket data internet seluler komersial dengan jangkauan sinyal 4G/5G.</td>
+            <td>Internet satelit orbit rendah (LEO) yang memungkinkan koneksi di lokasi mana pun tanpa perlu kabel bawah tanah.</td>
+          </tr>
+          <tr>
+            <td>Siapa target audiens mereka?<br>— misalnya kelompok usia / budaya / pemerintah / sekolah / kelompok masyarakat</td>
+            <td>Kelompok masyarakat di daerah pelosok, sekolah di wilayah 3T, dan instansi pemerintah daerah.</td>
+            <td>Masyarakat umum, pelajar, pekerja, dan pelaku bisnis di wilayah perkotaan hingga pedesaan.</td>
+            <td>Pengguna di area sangat terpencil (remote), sektor maritim, atau bisnis yang membutuhkan <em>bandwidth</em> tinggi di lokasi sulit.</td>
+          </tr>
+          <tr>
+            <td>Apakah mereka gratis / berapa biayanya untuk layanan atau produk ini? — berapa biayanya untuk mengakses solusi ini?</td>
+            <td>Gratis bagi pengguna di titik lokasi tertentu yang disediakan pemerintah.</td>
+            <td>Berbayar; harga bergantung pada kuota data, mulai dari paket harian murah hingga bulanan.</td>
+            <td>Berbayar; memerlukan biaya perangkat keras yang cukup mahal di awal dan langganan bulanan di atas harga rata-rata provider lokal.</td>
+          </tr>
+          <tr>
+            <td>Kesenjangan apa yang Anda lihat dalam layanan atau produk mereka? — siapa yang ketinggalan dengan layanan ini?</td>
+            <td>Kecepatan seringkali terbatas karena banyaknya pengguna; pemeliharaan perangkat di lapangan sering terkendala.</td>
+            <td>Masyarakat ekonomi rendah sering kesulitan menjangkau harga kuota bulanan; sinyal tidak stabil di dalam ruangan atau area terpencil.</td>
+            <td>Biaya perangkat dan langganan sangat mahal, sehingga tidak terjangkau bagi individu atau sekolah dengan anggaran terbatas.</td>
+          </tr>
+          <tr>
+            <td>Wawasan lainnya</td>
+            <td>Sangat membantu pemerataan informasi, namun butuh pendampingan literasi digital agar tepat guna.</td>
+            <td>Menjadi solusi utama saat ini, namun infrastrukturnya masih terpusat di area padat penduduk.</td>
+            <td>Teknologi paling menjanjikan untuk cakupan global, namun tantangan utamanya adalah harga dan regulasi lokal.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:11.5px;color:var(--text-light);margin-top:12px;font-style:italic;" class="fade-up">Adapted from IO STEAM Innovations Class Empathy Research Bec Mckinney Shenton College</p>
+  </div>
+</section>
+
+<!-- ====== SECTION 2: BUKTI SURVEI ====== -->
+<section class="survey-section section-sm">
+  <div class="container">
+    <div class="section-label fade-up">Bukti bahwa Masalah/Isu Itu Ada</div>
+    <h2 class="section-title fade-up fade-up-d1">Survei Komunitas — Kelompok 6</h2>
+    <p class="section-desc fade-up fade-up-d2" style="margin-bottom:12px;">
+      Dengan menggunakan Google Forms, kami membagikan survei kepada komunitas di sekitar kami untuk mengetahui tingkat keterjangkauan dan akses internet masyarakat. Survei menggunakan skala penilaian 1–5 (1 = sangat buruk, 5 = sangat baik) dan bersifat anonim.
+    </p>
+    <p style="font-size:14px;color:var(--text-muted);margin-bottom:36px;"><strong>Total responden: 28 orang</strong> — dari berbagai wilayah termasuk Jakarta, Bandung, Medan, dan Tambun.</p>
+
+    <!-- Key Stats Row -->
+    <div class="key-stat-row fade-up" style="margin-bottom:32px;">
+      <div class="key-stat">
+        <div class="ks-num">28</div>
+        <div class="ks-label">Total Responden Survei</div>
+      </div>
+      <div class="key-stat">
+        <div class="ks-num" style="color:var(--teal);">64,3%</div>
+        <div class="ks-label">Pernah mengalami kesulitan akses internet signifikan</div>
+      </div>
+      <div class="key-stat">
+        <div class="ks-num" style="color:var(--green);">82,1%</div>
+        <div class="ks-label">Internet sangat membantu belajar/kerja (skor 5/5)</div>
+      </div>
+      <div class="key-stat">
+        <div class="ks-num" style="color:#F59E0B;">50%</div>
+        <div class="ks-label">Menilai biaya internet mahal (skor 1–2 dari 5)</div>
+      </div>
+    </div>
+
+    <div class="survey-grid fade-up fade-up-d1">
+
+      <!-- Q2 Jenis Koneksi -->
+      <div class="survey-card">
+        <div class="q-label">Q2</div>
+        <h4>Jenis Koneksi Internet Utama</h4>
+        <p class="respondents">28 responses</p>
+        <div class="bar-list">
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">WiFi Jaringan Tetap (rumah/kantor)</span><span class="val">53,6%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-1" style="width:53.6%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Data Seluler (4G/5G)</span><span class="val">39,3%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-2" style="width:39.3%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">WiFi Publik (kafe, perpustakaan)</span><span class="val">0%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-3" style="width:0%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Lainnya (kabel LAN, dll.)</span><span class="val">7,1%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-4" style="width:7.1%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 Kecepatan -->
+      <div class="survey-card">
+        <div class="q-label">Q3</div>
+        <h4>Kecepatan Koneksi Internet (Skala 1–5)</h4>
+        <p class="respondents">28 responses · 1=Sangat Lambat, 5=Sangat Cepat</p>
+        <div class="scale-bars">
+          <div class="scale-col">
+            <span class="scale-pct">0%</span>
+            <div class="scale-bar bf-5" style="height:2px;background:#E11D48;border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">1</span>
+          </div>
+          <div class="scale-col">
+            <span class="scale-pct">7,1%</span>
+            <div class="scale-bar" style="height:14px;background:linear-gradient(180deg,#FB7185,#E11D48);border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">2</span>
+          </div>
+          <div class="scale-col">
+            <span class="scale-pct">39,3%</span>
+            <div class="scale-bar" style="height:60px;background:linear-gradient(180deg,var(--teal),var(--primary));border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">3</span>
+          </div>
+          <div class="scale-col">
+            <span class="scale-pct" style="color:var(--green);">42,9%</span>
+            <div class="scale-bar" style="height:72px;background:linear-gradient(180deg,var(--green),#059669);border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">4</span>
+          </div>
+          <div class="scale-col">
+            <span class="scale-pct">10,7%</span>
+            <div class="scale-bar" style="height:20px;background:linear-gradient(180deg,#38BDF8,#0284C7);border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">5</span>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin-top:12px;">Mayoritas responden menilai kecepatan di angka 4 (42,9%) dan 3 (39,3%) — cukup cepat namun belum optimal.</p>
+      </div>
+
+      <!-- Q4 Perangkat -->
+      <div class="survey-card">
+        <div class="q-label">Q4</div>
+        <h4>Perangkat untuk Mengakses Internet</h4>
+        <p class="respondents">28 responses</p>
+        <div class="bar-list">
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Smartphone (HP)</span><span class="val">96,4%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-1" style="width:96.4%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Laptop/Komputer Pribadi</span><span class="val">92,9%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-2" style="width:92.9%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Tablet</span><span class="val">7,1%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-3" style="width:7.1%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Komputer Umum (warnet, kantor, sekolah)</span><span class="val">3,6%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-4" style="width:3.6%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q5 Durasi -->
+      <div class="survey-card">
+        <div class="q-label">Q5</div>
+        <h4>Durasi Penggunaan Internet per Hari</h4>
+        <p class="respondents">28 responses</p>
+        <div class="pie-wrap" style="justify-content:center;">
+          <svg class="pie-svg" width="130" height="130" viewBox="0 0 130 130">
+            <!-- Lebih dari 6 jam: 85.7% = 308.5 deg -->
+            <circle cx="65" cy="65" r="52" fill="none" stroke="#E0F5F5" stroke-width="20"/>
+            <circle cx="65" cy="65" r="52" fill="none" stroke="url(#g1)" stroke-width="20"
+              stroke-dasharray="278 48" stroke-dashoffset="78" stroke-linecap="round"/>
+            <circle cx="65" cy="65" r="52" fill="none" stroke="#FDE68A" stroke-width="20"
+              stroke-dasharray="46 280" stroke-dashoffset="-200" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#006D77"/>
+                <stop offset="100%" stop-color="#06B6D4"/>
+              </linearGradient>
+            </defs>
+            <text x="65" y="61" text-anchor="middle" font-family="Sora,sans-serif" font-size="15" font-weight="800" fill="#0D1B2A">85,7%</text>
+            <text x="65" y="77" text-anchor="middle" font-family="Nunito Sans,sans-serif" font-size="9" fill="#4A6080">&gt;6 jam</text>
+          </svg>
+          <div class="pie-legend">
+            <div class="pie-legend-item"><div class="pie-dot" style="background:linear-gradient(90deg,#006D77,#06B6D4);"></div>Lebih dari 6 jam — <strong>85,7%</strong></div>
+            <div class="pie-legend-item"><div class="pie-dot" style="background:#FDE68A;"></div>3–6 jam — <strong>14,3%</strong></div>
+            <div class="pie-legend-item"><div class="pie-dot" style="background:#D1D5DB;"></div>1–3 jam — <strong>0%</strong></div>
+            <div class="pie-legend-item"><div class="pie-dot" style="background:#E5E7EB;"></div>Kurang dari 1 jam — <strong>0%</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q6 Tujuan -->
+      <div class="survey-card">
+        <div class="q-label">Q6</div>
+        <h4>Tujuan Penggunaan Internet (Pilih max. 3)</h4>
+        <p class="respondents">28 responses</p>
+        <div class="bar-list">
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Komunikasi (pesan instan, media sosial)</span><span class="val">100%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-1" style="width:100%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Hiburan (streaming, musik, game)</span><span class="val">92,9%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-2" style="width:92.9%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Belajar/Edukasi (sekolah, kuliah)</span><span class="val">92,9%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-3" style="width:92.9%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Transaksi Keuangan & Belanja Online</span><span class="val">39,3%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-4" style="width:39.3%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Mencari Informasi/Berita</span><span class="val">39,3%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-5" style="width:39.3%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Pekerjaan/Bisnis</span><span class="val">32,1%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-6" style="width:32.1%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q7 Keterjangkauan -->
+      <div class="survey-card">
+        <div class="q-label">Q7</div>
+        <h4>Keterjangkauan Biaya Internet (Skala 1–5)</h4>
+        <p class="respondents">28 responses · 1=Sangat Mahal, 5=Sangat Terjangkau</p>
+        <div class="scale-bars">
+          <div class="scale-col">
+            <span class="scale-pct" style="color:#E11D48;">14,3%</span>
+            <div class="scale-bar" style="height:22px;background:#E11D48;border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">1</span>
+          </div>
+          <div class="scale-col">
+            <span class="scale-pct" style="color:#F59E0B;">35,7%</span>
+            <div class="scale-bar" style="height:54px;background:#F59E0B;border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">2</span>
+          </div>
+          <div class="scale-col">
+            <span class="scale-pct">39,3%</span>
+            <div class="scale-bar" style="height:62px;background:linear-gradient(180deg,var(--teal),var(--primary));border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">3</span>
+          </div>
+          <div class="scale-col">
+            <span class="scale-pct" style="color:var(--green);">10,7%</span>
+            <div class="scale-bar" style="height:18px;background:var(--green);border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">4</span>
+          </div>
+          <div class="scale-col">
+            <span class="scale-pct">0%</span>
+            <div class="scale-bar" style="height:2px;background:#D1D5DB;border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">5</span>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin-top:12px;"><strong style="color:#BE123C;">50% responden menilai biaya internet mahal</strong> (skor 1 atau 2). Tidak ada satu pun yang menilai "sangat terjangkau" (skor 5).</p>
+      </div>
+
+      <!-- Q8 Kesulitan Akses -->
+      <div class="survey-card">
+        <div class="q-label">Q8</div>
+        <h4>Pernah Mengalami Kesulitan Signifikan Akses Internet?</h4>
+        <p class="respondents">28 responses</p>
+        <div class="pie-wrap" style="justify-content:center;">
+          <svg class="pie-svg" width="130" height="130" viewBox="0 0 130 130">
+            <circle cx="65" cy="65" r="52" fill="none" stroke="#E0F5F5" stroke-width="20"/>
+            <circle cx="65" cy="65" r="52" fill="none" stroke="url(#g2)" stroke-width="20"
+              stroke-dasharray="210 116" stroke-dashoffset="78" stroke-linecap="round"/>
+            <circle cx="65" cy="65" r="52" fill="none" stroke="#FCA5A5" stroke-width="20"
+              stroke-dasharray="116 210" stroke-dashoffset="-132" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#006D77"/>
+                <stop offset="100%" stop-color="#22D3EE"/>
+              </linearGradient>
+            </defs>
+            <text x="65" y="61" text-anchor="middle" font-family="Sora,sans-serif" font-size="15" font-weight="800" fill="#0D1B2A">64,3%</text>
+            <text x="65" y="77" text-anchor="middle" font-family="Nunito Sans,sans-serif" font-size="9" fill="#4A6080">pernah</text>
+          </svg>
+          <div class="pie-legend">
+            <div class="pie-legend-item"><div class="pie-dot" style="background:linear-gradient(90deg,#006D77,#22D3EE);"></div>Ya, pernah kesulitan — <strong>64,3%</strong></div>
+            <div class="pie-legend-item"><div class="pie-dot" style="background:#FCA5A5;"></div>Tidak pernah — <strong>35,7%</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q9 Kendala Utama -->
+      <div class="survey-card">
+        <div class="q-label">Q9</div>
+        <h4>Kendala Utama Saat Mengakses Internet</h4>
+        <p class="respondents">28 responses · Pilih semua yang sesuai</p>
+        <div class="bar-list">
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Jaringan/sinyal lambat atau sering hilang</span><span class="val">71,4%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-1" style="width:71.4%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Biaya paket data/layanan mahal</span><span class="val">50%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-2" style="width:50%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Lainnya</span><span class="val">32,1%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-4" style="width:32.1%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Keterbatasan perangkat</span><span class="val">3,6%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-3" style="width:3.6%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Tidak ada infrastruktur jaringan</span><span class="val">3,6%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-5" style="width:3.6%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-meta"><span class="lbl">Keterbatasan literasi digital</span><span class="val">0%</span></div>
+            <div class="bar-track"><div class="bar-fill bf-6" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q10 Manfaat -->
+      <div class="survey-card" style="grid-column: span 2;">
+        <div class="q-label">Q10</div>
+        <h4>Seberapa Besar Internet Membantu Belajar/Kerja? (Skala 1–5)</h4>
+        <p class="respondents">28 responses · 1=Sama Sekali Tidak Membantu, 5=Sangat Membantu</p>
+        <div style="display:flex;align-items:flex-end;gap:10px;height:90px;max-width:500px;">
+          <div class="scale-col">
+            <span class="scale-pct">0%</span>
+            <div class="scale-bar" style="height:2px;background:#D1D5DB;border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">1</span>
+          </div>
+          <div class="scale-col">
+            <span class="scale-pct">0%</span>
+            <div class="scale-bar" style="height:2px;background:#D1D5DB;border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">2</span>
+          </div>
+          <div class="scale-col">
+            <span class="scale-pct">7,1%</span>
+            <div class="scale-bar" style="height:14px;background:#F59E0B;border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">3</span>
+          </div>
+          <div class="scale-col">
+            <span class="scale-pct">10,7%</span>
+            <div class="scale-bar" style="height:20px;background:linear-gradient(180deg,var(--teal),var(--primary));border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">4</span>
+          </div>
+          <div class="scale-col">
+            <span class="scale-pct" style="color:var(--green);font-size:14px;">82,1%</span>
+            <div class="scale-bar" style="height:76px;background:linear-gradient(180deg,var(--green),#059669);border-radius:4px 4px 0 0;width:100%;"></div>
+            <span class="scale-label">5</span>
+          </div>
+        </div>
+        <div style="margin-top:16px;padding:14px 18px;background:var(--green-soft);border-radius:var(--radius-xs);border-left:3px solid var(--green);">
+          <p style="font-size:13.5px;color:#065F46;line-height:1.65;margin:0;"><strong>82,1% responden menyatakan internet SANGAT membantu (skor 5)</strong> kelancaran aktivitas belajar atau kerja mereka — membuktikan bahwa akses internet bukan kemewahan, melainkan kebutuhan esensial.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== SECTION 3: KESIMPULAN ====== -->
+<section class="section">
+  <div class="container">
+    <div class="section-label fade-up">Kesimpulan Survei</div>
+    <h2 class="section-title fade-up fade-up-d1">Temuan Utama dari Bukti yang Dikumpulkan</h2>
+    <p class="section-desc fade-up fade-up-d2" style="margin-bottom:36px;">Berdasarkan 10 pertanyaan survei yang dijawab oleh 28 responden, terdapat empat temuan utama yang saling berkaitan.</p>
+    <div style="display:flex;flex-direction:column;gap:14px;" class="fade-up fade-up-d3">
+      <div class="conclusion-item">
+        <div class="conclusion-icon">⚡</div>
+        <div class="conclusion-body">
+          <h4>Kualitas Jaringan dan Kecepatan</h4>
+          <p>Prioritas utama peningkatan akses internet adalah kecepatan, kestabilan jaringan (mengurangi fluktuasi), dan peningkatan sinyal. Sebanyak 71,4% responden menyebut sinyal lambat/sering hilang sebagai kendala utama. Banyak responden merasa kecepatan saat ini tidak sebanding dengan harga yang dibayarkan.</p>
+        </div>
+      </div>
+      <div class="conclusion-item c2">
+        <div class="conclusion-icon">🗺️</div>
+        <div class="conclusion-body">
+          <h4>Pemerataan Akses dan Infrastruktur</h4>
+          <p>Perluasan dan pemerataan jaringan internet ke seluruh wilayah, termasuk di luar kota-kota besar dan hingga ke pelosok daerah, masih sangat dibutuhkan — termasuk di daerah yang sudah ada responden survei kami seperti Medan dan Tambun yang melaporkan sinyal buruk.</p>
+        </div>
+      </div>
+      <div class="conclusion-item c3">
+        <div class="conclusion-icon">💰</div>
+        <div class="conclusion-body">
+          <h4>Keterjangkauan Biaya</h4>
+          <p>50% responden menilai biaya internet mahal (skor 1–2 dari 5), dan tidak ada satu pun yang menilai "sangat terjangkau" (skor 5). Biaya paket data dan harga berlangganan internet dinilai masih memberatkan, terutama bagi kalangan menengah ke bawah, dan perlu dimurahkan atau ditingkatkan kuotanya.</p>
+        </div>
+      </div>
+      <div class="conclusion-item c4">
+        <div class="conclusion-icon">🔧</div>
+        <div class="conclusion-body">
+          <h4>Peningkatan Holistik</h4>
+          <p>Selain kecepatan dan pemerataan, peningkatan juga harus mencakup pembenahan infrastruktur, peningkatan literasi dan keamanan digital, serta perbaikan tata kelola industri telekomunikasi. Masalah ini tidak bisa diselesaikan hanya dari satu sisi saja.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="background:var(--bg-card);border-top:1px solid var(--border-light);padding:32px 0;">
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+    <span style="font-size:14px;color:var(--text-muted);">Langkah berikutnya dalam Design Thinking</span>
+    <a href="ideation.html" class="btn-primary">Lanjut ke Ideasi (Mind Map) →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><h3>SDG 9 — Indonesia</h3><p>Proyek edukasi tentang Target 9.c: Akses TIK yang merata di Indonesia. Kelompok 6 — STEM 2026.</p></div>
+      <div class="footer-col"><h4>Halaman</h4><a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a></div>
+      <div class="footer-col"><h4>Design Thinking</h4><a href="ideation.html">Ideasi</a><a href="prototype.html">Prototipe</a><a href="testing.html">Pengujian</a><a href="reflection.html">Refleksi</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Kelompok 6 — STEM. Proyek SDG 9 Indonesia.</span>
+      <span>Adapted from IO STEAM Innovations Class, Bec Mckinney, Shenton College.</span>
+    </div>
+  </div>
+</footer>
+<script>
+  document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('open'));
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:0.08});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

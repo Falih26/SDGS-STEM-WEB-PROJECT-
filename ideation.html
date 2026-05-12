@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ideasi: Mind Map Keterjangkauan — SDG 9 Indonesia</title>
+  <link rel="stylesheet" href="sdg.css" />
+  <style>
+    /* Styling Khusus Mind Map */
+    .mm-wrapper { display: flex; flex-direction: column; align-items: center; gap: 48px; }
+    .mm-root {
+      background: var(--navy); color: #fff; padding: 24px 48px; border-radius: var(--radius);
+      font-family: var(--font-display); font-size: clamp(1.2rem, 3vw, 1.8rem); font-weight: 800;
+      text-align: center; box-shadow: var(--shadow-lg); position: relative; z-index: 2; border: 2px solid var(--primary-light);
+    }
+    .mm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; width: 100%; }
+    @media (max-width: 900px) { .mm-grid { grid-template-columns: 1fr; } }
+    .mm-column { display: flex; flex-direction: column; gap: 24px; }
+    .mm-col-header {
+      font-family: var(--font-display); font-size: 1.25rem; font-weight: 800; text-align: center;
+      padding: 16px; border-radius: var(--radius-sm); color: #fff; box-shadow: var(--shadow-sm);
+    }
+    .col-unrealistic .mm-col-header { background: #3F3F46; }
+    .col-realistic .mm-col-header { background: var(--primary); }
+    
+    .mm-card {
+      background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius);
+      padding: 28px; box-shadow: var(--shadow-sm); position: relative; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .mm-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .mm-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+    .mm-card.c-magenta::before { background: #D946EF; } 
+    .mm-card.c-red::before { background: #EF4444; } 
+    .mm-card.c-blue::before { background: #3B82F6; } 
+    .mm-card.c-orange::before { background: #F97316; } 
+    .mm-card h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; margin-bottom: 20px; color: var(--text); display: flex; align-items: center; gap: 10px; }
+    .mm-list { display: flex; flex-direction: column; gap: 12px; }
+    .mm-item { background: var(--bg-subtle); padding: 16px 20px; border-radius: var(--radius-sm); font-size: 13.5px; line-height: 1.65; color: var(--text-muted); border-left: 3px solid transparent; }
+    .mm-card.c-magenta .mm-item { border-left-color: #D946EF; background: #FDF4FF; }
+    .mm-card.c-red .mm-item { border-left-color: #EF4444; background: #FEF2F2; }
+    .mm-card.c-blue .mm-item { border-left-color: #3B82F6; background: #EFF6FF; }
+    .mm-card.c-orange .mm-item { border-left-color: #F97316; background: #FFF7ED; }
+    .action-container { text-align: center; margin-top: 48px; }
+
+    /* --- Styling untuk Modal (Pop-up) --- */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(13, 27, 42, 0.85); backdrop-filter: blur(8px);
+      z-index: 1000; display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal-content {
+      background: var(--bg-card); width: 95%; max-width: 1100px; height: 90vh;
+      border-radius: var(--radius); position: relative; box-shadow: var(--shadow-lg);
+      display: flex; flex-direction: column; overflow: hidden;
+      transform: translateY(20px); transition: transform 0.3s ease;
+    }
+    .modal-overlay.active .modal-content { transform: translateY(0); }
+    .modal-header {
+      padding: 18px 24px; border-bottom: 1px solid var(--border-light);
+      display: flex; justify-content: space-between; align-items: center; background: #fff;
+    }
+    .modal-header h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--text); margin: 0; }
+    .modal-close {
+      background: var(--bg-subtle); border: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 1.3rem; transition: background 0.2s, color 0.2s;
+    }
+    .modal-close:hover { background: #EF4444; color: #fff; }
+    .modal-body { flex: 1; width: 100%; background: #E8F0F7; }
+    .modal-body iframe { width: 100%; height: 100%; border: none; }
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand"><div class="navbar-logo">SDG</div><span class="navbar-site-name">SDG <span>9</span> Indonesia</span></a>
+    <nav class="navbar-nav">
+      <a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a>
+      <a href="empathy.html">Empati</a><a href="ideation.html" class="active">Ideasi</a>
+      <a href="prototype.html">Prototipe</a><a href="testing.html">Pengujian</a><a href="reflection.html">Refleksi</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a>
+  <a href="empathy.html">Empati & Riset</a><a href="ideation.html" class="active">Ideasi</a>
+  <a href="prototype.html">Prototipe</a><a href="testing.html">Pengujian</a><a href="reflection.html">Refleksi</a>
+</div>
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-header-step">💡 Langkah 2 dari 5 — Design Thinking</div>
+    <h1>Ideasi: Pemetaan Tantangan & Solusi</h1>
+    <p>Menganalisis dan memetakan solusi dalam menyikapi sulitnya keterjangkauan akses internet dengan membandingkan pendekatan yang tidak realistis dengan yang realistis.</p>
+  </div>
+</header>
+
+<div class="dt-nav">
+  <div class="dt-nav-inner">
+    <a href="empathy.html"><span class="dt-nav-dot"></span>Empati</a>
+    <a href="ideation.html" class="active"><span class="dt-nav-dot"></span>Ideasi</a>
+    <a href="prototype.html"><span class="dt-nav-dot"></span>Prototipe</a>
+    <a href="testing.html"><span class="dt-nav-dot"></span>Pengujian</a>
+    <a href="reflection.html"><span class="dt-nav-dot"></span>Refleksi</a>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-label fade-up">Peta Konsep (Mind Map)</div>
+    <h2 class="section-title fade-up fade-up-d1">Memahami Lanskap Solusi Akses Internet</h2>
+    <p class="section-desc fade-up fade-up-d2" style="margin-bottom:48px;">
+      Gagasan ideasi dikelompokkan berdasarkan sejauh mana solusi tersebut dapat diterapkan di dunia nyata secara efektif.
+    </p>
+
+    <div class="mm-wrapper fade-up fade-up-d3">
+      <div class="mm-root">🌐 Sulitnya Keterjangkauan Akses Internet</div>
+      <div class="mm-grid">
+        <div class="mm-column col-unrealistic">
+          <div class="mm-col-header">Tidak Realistis</div>
+          <div class="mm-card c-magenta">
+            <h3>Solusi Instan Tanpa Biaya</h3>
+            <div class="mm-list">
+              <div class="mm-item">Menuntut internet gratis berkualitas tinggi untuk semua orang tanpa memikirkan biaya infrastruktur, perawatan jaringan, dan sumber pendanaannya.</div>
+              <div class="mm-item">Mengasumsikan perusahaan swasta akan memperluas layanan secara sukarela tanpa insentif atau model bisnis yang masuk akal.</div>
+              <div class="mm-item">Beranggapan bahwa satu kebijakan sederhana bisa langsung menghapus seluruh masalah akses di tiap daerah.</div>
+            </div>
+          </div>
+          <div class="mm-card c-red">
+            <h3>Teknologi Futuristik</h3>
+            <div class="mm-list">
+              <div class="mm-item">Mengandalkan jaringan Internet global supercanggih yang langsung menjangkau seluruh pelosok tanpa proses pembangunan fisik.</div>
+              <div class="mm-item">Membuat perangkat pemancar berdaya tak terbatas yang bisa memberi koneksi stabil tanpa batasan fisika dan energi.</div>
+              <div class="mm-item">Mengharapkan teknologi eksperimen yang belum teruji dapat diterapkan secara massal dalam waktu singkat.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mm-column col-realistic">
+          <div class="mm-col-header">Realistis</div>
+          <div class="mm-card c-blue">
+            <h3>Pengembangan Infrastruktur</h3>
+            <div class="mm-list">
+              <div class="mm-item">Pembangunan menara BTS dan perluasan jaringan fiber optik ke wilayah terpencil secara bertahap.</div>
+              <div class="mm-item">Kerja sama pemerintah dan penyedia layanan melalui skema berbagi risiko dan target cakupan yang terukur.</div>
+              <div class="mm-item">Pemanfaatan teknologi matang seperti fixed wireless access atau satelit orbit rendah secara terukur.</div>
+            </div>
+          </div>
+          <div class="mm-card c-orange">
+            <h3>Subsidi dan Kebijakan</h3>
+            <div class="mm-list">
+              <div class="mm-item">Program literasi digital dan dukungan anggaran daerah untuk keberlanjutan pemanfaatan akses.</div>
+              <div class="mm-item">Regulasi harga dan insentif investasi untuk mendorong operator memperluas layanan tanpa membebani masyarakat.</div>
+              <div class="mm-item">Pemberian subsidi perangkat dan paket data bagi pelajar, keluarga pra-sejahtera, dan UMKM.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="action-container fade-up fade-up-d4">
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">Ingin melihat visual aslinya?</p>
+        <button id="btnOpenMap" class="btn-primary" style="cursor: pointer; border:none; outline:none;">
+          <span style="font-size: 1.2rem;">👁️</span> Tampilkan Mind Map
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal-overlay" id="mindMapModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Visual Mind Map: Solusi Akses Internet</h3>
+      <button class="modal-close" id="btnCloseMap">&times;</button>
+    </div>
+    <div class="modal-body">
+      <iframe src="Mind Map SGD 9.c.pdf#toolbar=0" title="Visual Mind Map"></iframe>
+    </div>
+  </div>
+</div>
+
+<div style="background:var(--bg-card);border-top:1px solid var(--border-light);padding:32px 0;">
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+    <a href="empathy.html" style="font-size:14px;color:var(--text-muted); font-weight: 600;">← Kembali ke Empati</a>
+    <a href="prototype.html" class="btn-primary">Lanjut ke Prototipe →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><h3>SDG 9 — Indonesia</h3><p>Proyek edukasi tentang Target 9.c: Akses TIK yang merata di Indonesia.</p></div>
+      <div class="footer-col"><h4>Halaman</h4><a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a></div>
+      <div class="footer-col"><h4>Design Thinking</h4><a href="empathy.html">Empati</a><a href="prototype.html">Prototipe</a><a href="testing.html">Pengujian</a><a href="reflection.html">Refleksi</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2024 Proyek SDG 9 Indonesia.</span></div>
+  </div>
+</footer>
+
+<script>
+  // Script untuk Navigasi Mobile
+  document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('open'));
+  
+  // Script untuk Animasi Scroll
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+  // Script Khusus untuk Modal (Pop-up) Mind Map
+  const modal = document.getElementById('mindMapModal');
+  const btnOpen = document.getElementById('btnOpenMap');
+  const btnClose = document.getElementById('btnCloseMap');
+
+  // Buka Modal
+  btnOpen.addEventListener('click', () => {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Menghentikan scroll website di belakang pop-up
+  });
+
+  // Tutup Modal dari tombol silang
+  btnClose.addEventListener('click', () => {
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto'; // Mengembalikan fungsi scroll website
+  });
+
+  // Tutup Modal ketika mengklik area gelap di luarnya
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+  });
+</script>
+</body>
+</html>
