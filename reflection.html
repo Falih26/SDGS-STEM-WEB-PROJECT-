@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Refleksi — SDG 9 Indonesia</title>
+  <link rel="stylesheet" href="sdg.css" />
+  <style>
+    .reflection-prose {
+      max-width: 100%;
+    }
+    .reflection-prose h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem; font-weight: 800;
+      margin: 40px 0 16px; letter-spacing: -0.2px;
+      color: var(--navy);
+      line-height: 1.4;
+    }
+    .reflection-prose h3:first-child { margin-top: 0; }
+    .reflection-prose p {
+      font-size: 15px; color: var(--text-muted);
+      line-height: 1.82; margin-bottom: 18px;
+    }
+    .reflection-prose p strong { color: var(--text); font-weight: 700; }
+    .reflection-divider {
+      width: 48px; height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--teal));
+      border-radius: 2px;
+      margin: 36px 0;
+    }
+
+    .learning-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 32px 0; }
+    .learning-card {
+      background: var(--bg-card); border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm); padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .lc-icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .learning-card h5 { font-family: var(--font-display); font-size: 14px; font-weight: 800; margin-bottom: 8px; color: var(--primary); }
+    .learning-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.7; margin: 0; }
+
+    .closing-panel {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--primary-dark) 60%, var(--primary) 100%);
+      border-radius: 28px; padding: 64px;
+      text-align: center; color: #fff;
+      position: relative; overflow: hidden;
+    }
+    .closing-panel::before {
+      content: ''; position: absolute; top: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(131,197,190,0.15) 0%, transparent 70%);
+    }
+    .closing-panel h2 { font-family: var(--font-display); font-size: clamp(1.8rem,3vw,2.8rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 20px; position: relative; }
+    .closing-panel p { font-size: 16px; opacity: 0.75; line-height: 1.78; max-width: 600px; margin: 0 auto 36px; position: relative; }
+    .closing-nav { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+    @media (max-width: 900px) {
+      .main-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+    }
+    @media (max-width: 700px) {
+      .learning-grid { grid-template-columns: 1fr; }
+      .closing-panel { padding: 40px 28px; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand"><div class="navbar-logo">SDG</div><span class="navbar-site-name">SDG <span>9</span> Indonesia</span></a>
+    <nav class="navbar-nav">
+      <a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a>
+      <a href="empathy.html">Empati</a><a href="ideation.html">Ideasi</a>
+      <a href="prototype.html">Prototipe</a><a href="testing.html">Pengujian</a><a href="reflection.html" class="active">Refleksi</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a>
+  <a href="empathy.html">Empati & Riset</a><a href="ideation.html">Ideasi</a>
+  <a href="prototype.html">Prototipe</a><a href="testing.html">Pengujian</a><a href="reflection.html" class="active">Refleksi</a>
+</div>
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-header-step">🌱 Langkah 5 dari 5 — Design Thinking</div>
+    <h1>Refleksi & Pembelajaran</h1>
+    <p>Evaluasi mendalam mengenai proses Design Thinking, relevansi SDGs dalam inovasi teknologi SpotGo, dan keterampilan signifikan yang diperoleh.</p>
+  </div>
+</header>
+
+<div class="dt-nav">
+  <div class="dt-nav-inner">
+    <a href="empathy.html"><span class="dt-nav-dot"></span>Empati</a>
+    <a href="ideation.html"><span class="dt-nav-dot"></span>Ideasi</a>
+    <a href="prototype.html"><span class="dt-nav-dot"></span>Prototipe</a>
+    <a href="testing.html"><span class="dt-nav-dot"></span>Pengujian</a>
+    <a href="reflection.html" class="active"><span class="dt-nav-dot"></span>Refleksi</a>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="main-grid" style="display:grid;grid-template-columns:1fr 340px;gap:64px;align-items:start;">
+      <div class="reflection-prose fade-up">
+        <div class="section-label" style="margin-bottom:8px;">Tanya Jawab Refleksi</div>
+
+        <h3>1. Mengapa SDGs PBB relevan dengan inovator, penemu, dan desainer abad ke-21?</h3>
+        <p>Sebagai desainer dan inovator di abad ke-21, SDGs PBB sangat relevan karena memberikan kerangka kerja yang berpusat pada manusia dan keberlanjutan global. Dalam pengembangan perangkat lunak atau infrastruktur teknologi, fokusnya tidak lagi hanya pada kecanggihan baris kode atau kompleksitas topologi, melainkan bagaimana teknologi tersebut memecahkan masalah sosial yang nyata (Papanek, 2019).</p>
+        <p>SDGs, khususnya Tujuan 9, menjadi kompas yang memastikan inovasi seperti <strong>"SpotGo"</strong> dirancang tidak hanya untuk keuntungan komersial, tetapi juga untuk mengatasi kesenjangan akses digital di masyarakat.</p>
+
+        <div class="reflection-divider"></div>
+
+        <h3>2. Strategi mana yang menurut Anda paling membantu dan mengapa?</h3>
+        <p>Strategi yang paling membantu adalah <strong>Lean Canvas</strong> dan <strong>Matriks Riset Empati</strong>. Seringkali, saat merancang sistem jaringan atau portal otentikasi, fokus terlalu condong pada aspek teknis penyelesaian masalah.</p>
+        <p>Lean Canvas memaksa saya untuk memetakan secara terstruktur bagaimana nilai dari sebuah solusi Wi-Fi sementara (Pop-Up) dapat benar-benar dijangkau oleh pengguna akhir. Strategi ini sangat membantu dalam memvisualisasikan struktur biaya operasional alat dan metrik keberhasilan bisnisnya secara ringkas, menyeimbangkan antara teknis rekayasa sistem dengan realitas di lapangan (Maurya, 2012).</p>
+
+        <div class="reflection-divider"></div>
+
+        <h3>3. Mengapa menerima umpan balik (feedback) begitu penting dalam desain? Siapa yang Anda mintakan feedback?</h3>
+        <p>Menerima umpan balik sangat penting karena logika sistem atau desain antarmuka (UI/UX) yang terlihat sempurna di atas kertas dan simulasi sering kali menghadapi kendala tak terduga saat diimplementasikan (Norman, 2013). Umpan balik menyoroti titik buta (<em>blind spot</em>) yang luput dari perhatian desainer.</p>
+        <p>Ke depannya, saya akan meminta lebih banyak umpan balik dari <strong>Event Organizer (EO)</strong> dan <strong>teknisi lapangan</strong>. Mereka dipilih karena EO sangat memahami dinamika perilaku pengunjung dalam skala masif, sementara teknisi lapangan memiliki keahlian praktis dalam menangani limitasi perangkat (<em>router</em> atau catu daya) saat dihadapkan pada beban lalu lintas data (<em>traffic overload</em>) yang ekstrem.</p>
+
+        <div class="reflection-divider"></div>
+
+        <h3>4. Tahap Design Thinking mana yang paling menantang dan paling berkesan? Mengapa?</h3>
+        <p>Tahap yang paling menantang adalah <strong>Define (Menentukan Masalah)</strong>. Menerjemahkan data kuantitatif dari kuesioner Google Forms menjadi rumusan masalah yang tajam membutuhkan ketelitian analitis agar solusi yang dibangun tidak melenceng dari akar masalah.</p>
+        <p>Sebaliknya, tahap yang paling berkesan adalah <strong>Prototyping</strong> dan perumusan alur <em>Captive Portal</em>. Merancang logika sistem—mulai dari pengguna terhubung ke SSID, akses awal diblokir, diarahkan ke halaman pembayaran QRIS, hingga pengenalan <em>MAC Address Binding</em> untuk membuka gerbang internet—memberikan kepuasan tersendiri karena berhasil menerjemahkan gagasan abstrak menjadi alur sistem yang interaktif dan berkesinambungan.</p>
+
+        <div class="reflection-divider"></div>
+
+        <h3>5. Apa keterampilan/ide/konsep paling signifikan yang Anda peroleh semester ini?</h3>
+        <p>Konsep paling signifikan yang saya peroleh adalah <strong>integrasi antara Design Thinking dan penyelesaian masalah teknis terapan</strong>. Saya belajar bahwa merancang topologi jaringan atau arsitektur sistem hanyalah satu bagian dari persamaan.</p>
+        <p>Memastikan bahwa antarmuka sistem ramah bagi pengguna awam, aliran datanya efisien, dan model pelayanannya terjangkau adalah pencapaian utamanya. Keterampilan ini menyadarkan saya bahwa solusi komputasi yang baik harus selalu diimbangi dengan pemahaman mendalam tentang empati, kebutuhan masyarakat, dan batasan operasional penggunanya.</p>
+      </div>
+
+      <div class="fade-up fade-up-d2" style="position:sticky;top:calc(var(--nav-h) + 24px);">
+        <div class="section-label" style="margin-bottom:16px;">Ringkasan Intisari</div>
+        <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:800;margin-bottom:20px;">Pembelajaran Kunci</h3>
+        <div class="learning-grid" style="grid-template-columns:1fr;">
+          <div class="learning-card">
+            <div class="lc-icon">🎯</div>
+            <h5>Fokus Pemecahan Sosial</h5>
+            <p>Inovasi di abad 21 tidak hanya tentang komersialisasi, melainkan memecahkan masalah nyata seperti kesenjangan digital sesuai SDGs.</p>
+          </div>
+          <div class="learning-card">
+            <div class="lc-icon">🗺️</div>
+            <h5>Pemetaan Terstruktur</h5>
+            <p>Lean Canvas menjadi strategi ampuh untuk menyeimbangkan teknis rekayasa sistem jaringan dengan realitas biaya di lapangan.</p>
+          </div>
+          <div class="learning-card">
+            <div class="lc-icon">🔍</div>
+            <h5>Menyoroti Blind Spot</h5>
+            <p>Umpan balik (feedback) dari aktor krusial seperti teknisi lapangan dan EO menghindarkan desain dari kegagalan implementasi.</p>
+          </div>
+          <div class="learning-card">
+            <div class="lc-icon">⚙️</div>
+            <h5>Integrasi Teknis & Empati</h5>
+            <p>Solusi komputasi (seperti Captive Portal & MAC Binding) harus berjalan selaras dengan pemahaman akan kebutuhan dan limitasi masyarakat.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="closing-panel fade-up">
+      <h2>Membangun Jembatan Digital</h2>
+      <p>Akses internet adalah jembatan menuju kelancaran komunikasi dan transaksi. Perjalanan SpotGo membuktikan bahwa dengan pendekatan Design Thinking, kendala infrastruktur sesaat dapat diselesaikan melalui integrasi empati dan rekayasa jaringan yang lincah.</p>
+      <div class="closing-nav">
+        <a href="empathy.html" class="btn-white">← Kembali ke Awal Proses</a>
+        <a href="index.html" class="btn-ghost-white">Kembali ke Beranda</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>SDG 9 — Indonesia</h3>
+        <p>Proyek edukasi tentang Tujuan Pembangunan Berkelanjutan nomor 9 — Target 9.c: Akses Teknologi Informasi dan Komunikasi yang merata di Indonesia.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Halaman Utama</h4>
+        <a href="index.html">Beranda</a>
+        <a href="facts.html">Fakta & Data</a>
+        <a href="target.html">Target 9.c</a>
+      </div>
+      <div class="footer-col">
+        <h4>Design Thinking</h4>
+        <a href="empathy.html">Empati & Riset</a>
+        <a href="ideation.html">Ideasi</a>
+        <a href="prototype.html">Prototipe</a>
+        <a href="testing.html">Pengujian</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Proyek SDG 9 Indonesia. Dibuat untuk keperluan edukasi.</span>
+    </div>
+  </div>
+</footer>
+<script>
+  document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('open'));
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:0.08});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

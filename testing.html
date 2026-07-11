@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pengujian — SDG 9 Indonesia</title>
+  <link rel="stylesheet" href="sdg.css" />
+  <style>
+    .proto-showcase {
+      background: #0D141C; /* Sesuai dengan tema dark SpotGo */
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+    }
+    .proto-img-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .proto-img-wrap img {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+    .proto-link-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.05);
+      padding: 16px 24px;
+      border-radius: 8px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .proto-link-text { font-family: var(--font-display); font-weight: 700; font-size: 14px; }
+    .proto-btn {
+      background: #14B8A6; /* Warna aksen teal SpotGo */
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+    .proto-btn:hover { background: #0D9488; }
+
+    /* Fitur Grid */
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 40px; }
+    .feature-card {
+      background: var(--bg-card); border: 1px solid var(--border-light);
+      border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-sm);
+    }
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 12px; background: var(--teal-soft);
+      color: var(--teal); display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin-bottom: 16px;
+    }
+    .feature-card h4 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; margin-bottom: 10px; }
+    .feature-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.65; }
+
+    /* Alur Portal */
+    .flow-steps {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .flow-step {
+      display: flex; gap: 20px; align-items: center;
+      background: var(--bg-card); border: 1px solid var(--border-light);
+      padding: 20px 24px; border-radius: 12px;
+    }
+    .flow-num {
+      width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: #fff;
+      display: flex; align-items: center; justify-content: center; font-family: var(--font-display);
+      font-weight: 800; font-size: 18px; flex-shrink: 0;
+    }
+    .flow-text h4 { font-family: var(--font-display); font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+    .flow-text p { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+
+    @media (max-width: 900px) {
+      .feature-grid { grid-template-columns: 1fr; }
+      .flow-step { flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand"><div class="navbar-logo">SDG</div><span class="navbar-site-name">SDG <span>9</span> Indonesia</span></a>
+    <nav class="navbar-nav">
+      <a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a>
+      <a href="empathy.html">Empati</a><a href="ideation.html">Ideasi</a>
+      <a href="prototype.html">Prototipe</a><a href="testing.html" class="active">Pengujian</a><a href="reflection.html">Refleksi</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a>
+  <a href="empathy.html">Empati & Riset</a><a href="ideation.html">Ideasi</a>
+  <a href="prototype.html">Prototipe</a><a href="testing.html" class="active">Pengujian</a><a href="reflection.html">Refleksi</a>
+</div>
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-header-step">🧪 Langkah 4 dari 5 — Design Thinking</div>
+    <h1>Pengujian: Simulasi Prototipe</h1>
+    <p>Pengujian kelayakan konsep melalui prototipe interaktif SpotGo. Menggambarkan antarmuka, pemetaan jangkauan, dan alur captive portal.</p>
+  </div>
+</header>
+
+<div class="dt-nav">
+  <div class="dt-nav-inner">
+    <a href="empathy.html"><span class="dt-nav-dot"></span>Empati</a>
+    <a href="ideation.html"><span class="dt-nav-dot"></span>Ideasi</a>
+    <a href="prototype.html"><span class="dt-nav-dot"></span>Prototipe</a>
+    <a href="testing.html" class="active"><span class="dt-nav-dot"></span>Pengujian</a>
+    <a href="reflection.html"><span class="dt-nav-dot"></span>Refleksi</a>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-label fade-up">Demonstrasi Solusi</div>
+    <h2 class="section-title fade-up fade-up-d1">Eksplorasi Web Prototipe SpotGo</h2>
+    <p class="section-desc fade-up fade-up-d2" style="margin-bottom:32px;">Untuk memberikan gambaran nyata mengenai bagaimana sistem "Hotspot Berjalan" ini beroperasi secara digital, kami telah menyusun sebuah purwarupa (prototype) berbasis web. Tampilan ini menyimulasikan dasbor utama dan pengalaman pengguna (UX) pada perangkat mobile.</p>
+    
+    <div class="proto-showcase fade-up fade-up-d3">
+      <div class="proto-img-wrap">
+        <img src="image_a5a4dc.jpg" alt="Dashboard Prototipe SpotGo" />
+      </div>
+      <div class="proto-link-bar">
+        <div class="proto-link-text">🌐 Coba langsung simulasi interaktifnya di Netlify:</div>
+        <a href="https://spotgo-prototypeweb.netlify.app/" target="_blank" class="proto-btn">Buka Prototipe Web ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm" style="background:var(--bg-card); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+  <div class="container">
+    <div class="section-label fade-up">Penjelasan Panel</div>
+    <h2 class="section-title fade-up fade-up-d1" style="margin-bottom: 40px;">Komponen Utama Dasbor SpotGo</h2>
+    
+    <div class="feature-grid fade-up fade-up-d2">
+      <div class="feature-card">
+        <div class="feature-icon">📡</div>
+        <h4>Pemantauan Jangkauan (Coverage Map)</h4>
+        <p>Di sisi kiri antarmuka, terdapat panel simulasi radius Wi-Fi (Coverage Map). Fitur interaktif ini menunjukkan seberapa jauh sinyal dari <i>router mobile</i> agen memancar. Admin atau agen dapat melihat visibilitas perangkat pengguna yang terhubung di sekitarnya.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h4>Simulasi Captive Portal (Mobile View)</h4>
+        <p>Bagian tengah dasbor mendemonstrasikan layar <i>smartphone</i>. Ini adalah representasi persis dari apa yang dilihat pengguna akhir (kustomer) ketika mereka pertama kali terhubung ke sinyal SpotGo. Tanpa perlu <i>download</i> aplikasi, sistem akan langsung membuka halaman ini.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💸</div>
+        <h4>Integrasi Target SDG 9.c</h4>
+        <p>Antarmuka secara transparan menunjukkan misi utama: menyediakan akses internet universal dan terjangkau (mulai dari Rp 5.000). Visualisasi sinyal yang "Sangat Kuat" (94%) membuktikan bahwa internet instan dapat dihadirkan tepat di pusat kebutuhan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-label fade-up">Alur Sistem</div>
+    <h2 class="section-title fade-up fade-up-d1" style="margin-bottom:36px;">4 Langkah Sederhana Alur Portal</h2>
+    
+    <div class="flow-steps fade-up fade-up-d2">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-text">
+          <h4>Sambutan & Portal Utama</h4>
+          <p>Setelah pengguna menghubungkan Wi-Fi di ponsel mereka, jaringan secara otomatis mendeteksi perangkat (MAC Address) dan mengarahkan (redirect) ke halaman sambutan ini untuk mengecek kekuatan sinyal agen SpotGo terdekat.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-text">
+          <h4>Pemilihan Paket Internet</h4>
+          <p>Pengguna dapat memilih durasi atau kuota internet sesuai kebutuhan darurat mereka di lokasi tersebut (misalnya paket 1 Jam, 2 Jam, atau 24 Jam) dengan harga yang sangat terjangkau bagi masyarakat umum.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-text">
+          <h4>Informasi Kontak & Pembayaran</h4>
+          <p>Sistem dirancang mandiri (self-service). Pengguna memasukkan detail dasar (seperti nomor WhatsApp untuk struk digital) dan melakukan proses pemindaian QRIS yang terpadu langsung di layar ponsel.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-text">
+          <h4>Internet Aktif!</h4>
+          <p>Setelah pembayaran melalui API Gateway diverifikasi (biasanya dalam hitungan detik), sistem membuka blokir jaringan untuk pengguna. Kustomer dapat langsung berselancar, memesan transportasi online, atau berjejaring dengan koneksi yang stabil.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="background:var(--bg-card);border-top:1px solid var(--border-light);padding:32px 0;">
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+    <a href="prototype.html" style="font-size:14px;color:var(--text-muted);">← Kembali ke Prototipe</a>
+    <a href="reflection.html" class="btn-primary">Lanjut ke Refleksi →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><h3>SDG 9 — Indonesia</h3><p>Proyek edukasi tentang Target 9.c: Akses TIK yang merata di Indonesia.</p></div>
+      <div class="footer-col"><h4>Halaman</h4><a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a></div>
+      <div class="footer-col"><h4>Design Thinking</h4><a href="empathy.html">Empati</a><a href="ideation.html">Ideasi</a><a href="prototype.html">Prototipe</a><a href="reflection.html">Refleksi</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2024 Proyek SDG 9 Indonesia.</span></div>
+  </div>
+</footer>
+<script>
+  document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('open'));
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

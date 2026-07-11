@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prototipe — SDG 9 Indonesia</title>
+  <link rel="stylesheet" href="sdg.css" />
+  <style>
+    .proto-tabs { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
+    .proto-tab {
+      padding: 10px 20px; border-radius: 99px;
+      font-family: var(--font-display); font-size: 13px; font-weight: 700;
+      cursor: pointer; border: 2px solid var(--border);
+      background: var(--bg-card); color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .proto-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .proto-tab:hover:not(.active) { border-color: var(--primary); color: var(--primary); }
+
+    .proto-panel { display: none; }
+    .proto-panel.active { display: block; }
+
+    /* Module Grid untuk Starburst */
+    .module-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .module-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 24px; box-shadow: var(--shadow-sm); }
+    .module-num { font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
+    .module-card h4 { font-family: var(--font-display); font-size: 15px; font-weight: 800; margin-bottom: 8px; }
+    .module-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 8px; }
+    
+    /* Grid Canvas untuk Lean Canvas */
+    .canvas-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 24px; }
+    .canvas-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 16px; box-shadow: var(--shadow-sm); font-size: 13px; }
+    .canvas-card h4 { font-family: var(--font-display); font-size: 14px; font-weight: 800; margin-bottom: 12px; color: var(--primary); border-bottom: 1px solid var(--border-light); padding-bottom: 8px; }
+    .canvas-card h5 { font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-top: 16px; margin-bottom: 8px; color: var(--navy); }
+    .canvas-card ul { padding-left: 18px; margin-top: 4px; margin-bottom: 0; color: var(--text-muted); line-height: 1.55; }
+    .canvas-card li { margin-bottom: 6px; }
+    .canvas-card p { color: var(--text-muted); line-height: 1.55; margin-bottom: 8px; }
+    
+    /* Referensi Style */
+    .reference-box { margin-top: 32px; padding: 16px; background: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0; }
+    .reference-box h4 { font-size: 12px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .reference-box p { font-size: 11px; color: #475569; line-height: 1.6; margin-bottom: 6px; }
+
+    @media (max-width: 900px) {
+      .module-grid { grid-template-columns: 1fr; }
+      .canvas-grid { grid-template-columns: 1fr; }
+      .canvas-card { grid-column: 1 / -1 !important; grid-row: auto !important; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand"><div class="navbar-logo">SDG</div><span class="navbar-site-name">SDG <span>9</span> Indonesia</span></a>
+    <nav class="navbar-nav">
+      <a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a>
+      <a href="empathy.html">Empati</a><a href="ideation.html">Ideasi</a>
+      <a href="prototype.html" class="active">Prototipe</a><a href="testing.html">Pengujian</a><a href="reflection.html">Refleksi</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a>
+  <a href="empathy.html">Empati & Riset</a><a href="ideation.html">Ideasi</a>
+  <a href="prototype.html" class="active">Prototipe</a><a href="testing.html">Pengujian</a><a href="reflection.html">Refleksi</a>
+</div>
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-header-step">🛠️ Langkah 3 dari 5 — Design Thinking</div>
+    <h1>Prototipe: Analisis Model Bisnis & Solusi</h1>
+    <p>Visualisasi ide dan penjabaran kelayakan operasional menggunakan kerangka Starburst dan Lean Canvas untuk solusi "SpotGo"[cite: 2].</p>
+  </div>
+</header>
+
+<div class="dt-nav">
+  <div class="dt-nav-inner">
+    <a href="empathy.html"><span class="dt-nav-dot"></span>Empati</a>
+    <a href="ideation.html"><span class="dt-nav-dot"></span>Ideasi</a>
+    <a href="prototype.html" class="active"><span class="dt-nav-dot"></span>Prototipe</a>
+    <a href="testing.html"><span class="dt-nav-dot"></span>Pengujian</a>
+    <a href="reflection.html"><span class="dt-nav-dot"></span>Refleksi</a>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-label fade-up">Struktur Solusi</div>
+    <h2 class="section-title fade-up fade-up-d1">Prototipe "SpotGo"</h2>
+    
+    <!-- Navigation Tabs[cite: 1] -->
+    <div class="proto-tabs fade-up fade-up-d2">
+      <button class="proto-tab active" onclick="switchTab('starburst')">⭐ Analisis Starburst</button>
+      <button class="proto-tab" onclick="switchTab('leancanvas')">📊 Lean Canvas</button>
+    </div>
+
+    <!-- Panel Starburst[cite: 2] -->
+    <div class="proto-panel active" id="panel-starburst">
+      <h3 style="font-family:var(--font-display);font-size:1.3rem;font-weight:800;margin-bottom:8px;">Analisis Starburst: "SpotGo"</h3>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:32px;line-height:1.7;">Analisis mendalam mengenai audiens dan aspek fungsional dari masalah maupun solusi yang diusulkan[cite: 2].</p>
+      
+      <div class="module-grid fade-up">
+        <div class="module-card">
+          <div class="module-num">WHO (Siapa)</div>
+          <h4>Target Kustomer & Aktor</h4>
+          <p><strong>Target Kustomer:</strong> Pengunjung konser/festival, wisatawan di area susah sinyal, atau pekerja lapangan (seperti ojek online) yang membutuhkan koneksi stabil secara mendadak[cite: 2].</p>
+          <p><strong>Aktor Sistem:</strong> Agen lapangan (yang membawa alat), pengguna (kustomer), dan admin (pemilik sistem yang memantau pemasukan dan traffic jaringan)[cite: 2].</p>
+        </div>
+        <div class="module-card">
+          <div class="module-num">WHAT (Apa)</div>
+          <h4>Bentuk Solusi</h4>
+          <p>Sebuah platform layanan akses internet prabayar berbasis web (Captive Portal) untuk produk "Hotspot Berjalan"[cite: 2].</p>
+          <p>Sistem ini memungkinkan pengguna untuk membeli akses internet berbasis waktu atau kuota secara instan dari agen lapangan yang membawa perangkat router portable[cite: 2].</p>
+        </div>
+        <div class="module-card">
+          <div class="module-num">WHY (Mengapa)</div>
+          <h4>Alasan Kebutuhan</h4>
+          <p>Memberikan solusi internet yang agile (lincah) dan bisa dipindah-pindah ke lokasi yang sedang padat pengunjung tanpa perlu membangun tiang jaringan[cite: 2].</p>
+          <p>Website otentikasi diperlukan agar proses registrasi dan pembayaran bisa dilakukan secara mandiri (self-service) dan otomatis, tanpa agen harus repot mencatat atau menagih uang tunai[cite: 2].</p>
+        </div>
+        <div class="module-card">
+          <div class="module-num">WHERE (Di Mana)</div>
+          <h4>Lokasi Penggunaan</h4>
+          <p>Platform ini diakses langsung dari ponsel pintar (HP) pengguna saat mereka berada di lokasi fisik agen beroperasi[cite: 2]. Area operasinya mencakup:</p>
+          <ul style="padding-left: 20px; font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-top: 8px;">
+            <li>Pusat keramaian outdoor (festival, bazar, konser)[cite: 2].</li>
+            <li>Area publik yang minim infrastruktur (taman, alun-alun)[cite: 2].</li>
+            <li>Acara kampus atau bootcamp yang membutuhkan akses internet darurat[cite: 2].</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="reference-box fade-up">
+        <h4>Daftar Pustaka</h4>
+        <p>Kurose, J. F., & Ross, K. W. (2021). <i>Computer networking: A top-down approach</i> (8th ed.). Pearson[cite: 2].</p>
+        <p>Pratama, A., & Nugroho, B. (2022). Ketergantungan pekerja gig economy terhadap stabilitas infrastruktur telekomunikasi seluler di wilayah urban. <i>Jurnal Teknologi Informasi dan Komunikasi</i>, 14(2), 112-125[cite: 2].</p>
+        <p>Setiawan, D., Rahman, A., & Fauzi, I. (2023). Solusi jaringan ad-hoc dan portable hotspot untuk mengatasi kepadatan trafik data pada acara publik berskala besar. <i>Jurnal Teknik Elektro dan Komputer</i>, 9(1), 45-54[cite: 2].</p>
+      </div>
+    </div>
+
+    <!-- Panel Lean Canvas[cite: 2] -->
+    <div class="proto-panel" id="panel-leancanvas">
+      <h3 style="font-family:var(--font-display);font-size:1.3rem;font-weight:800;margin-bottom:8px;">Lean Canvas Model</h3>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:32px;line-height:1.7;">Pemetaan strategis yang memperjelas masalah dan solusi yang diusulkan untuk ekosistem Wi-Fi Pop-Up "SpotGo"[cite: 2].</p>
+
+      <div class="canvas-grid fade-up">
+        <!-- 1. Masalah -->
+        <div class="canvas-card" style="grid-row: span 2;">
+          <h4>1. Masalah</h4>
+          <ul>
+            <li>Jaringan seluler sering down/blank spot di area keramaian akibat traffic overload[cite: 2].</li>
+            <li>Infrastruktur Wi-Fi publik statis di area sementara mahal dan tidak efisien[cite: 2].</li>
+            <li>Pengunjung kesulitan memesan ojek online, bertransaksi QRIS, atau berkomunikasi saat butuh internet darurat[cite: 2].</li>
+          </ul>
+          <h5>Alternatif solusi yang sudah ada:</h5>
+          <ul>
+            <li>Beli kuota darurat dari provider (mahal, lambat aktivasi)[cite: 2].</li>
+            <li>Minta tethering dari orang lain (tidak selalu tersedia)[cite: 2].</li>
+          </ul>
+        </div>
+        
+        <!-- 4. Solusi & 8. Key Metrics -->
+        <div style="grid-row: span 2; display: flex; flex-direction: column; gap: 16px;">
+          <div class="canvas-card" style="flex: 1;">
+            <h4>4. Solusi</h4>
+            <ul>
+              <li>Platform captive portal prabayar berbasis web untuk produk Hotspot Berjalan[cite: 2].</li>
+              <li>Agen lapangan membawa router portable yang memancarkan Wi-Fi open tanpa password[cite: 2].</li>
+              <li>Pembayaran QRIS otomatis tanpa registrasi akun, hanya input nomor HP[cite: 2].</li>
+              <li>Paket berbasis waktu: 1 Jam, 2 Jam, 6 Jam, 24 Jam[cite: 2].</li>
+            </ul>
+          </div>
+          <div class="canvas-card" style="flex: 1;">
+            <h4>8. Key Metrics</h4>
+            <ul>
+              <li>Jumlah transaksi per agen per hari (target: >20 transaksi)[cite: 2].</li>
+              <li>Waktu dari terhubung Wi-Fi hingga akses aktif (<30 detik)[cite: 2].</li>
+              <li>Tingkat konversi pengguna terkoneksi vs yang membeli paket[cite: 2].</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3. Unique Value Prop -->
+        <div class="canvas-card" style="grid-row: span 2;">
+          <h4>3. Unique Value Proposition</h4>
+          <ul>
+            <li>Hotspot yang mobile dan bisa berpindah lokasi sesuai keramaian, tidak statis[cite: 2].</li>
+            <li>Aktivasi internet otomatis via MAC Address Binding tanpa campur tangan admin[cite: 2].</li>
+            <li>Tidak perlu download aplikasi, cukup browser bawaan HP[cite: 2].</li>
+            <li>Dari koneksi Wi-Fi hingga internet aktif hanya dalam hitungan detik[cite: 2].</li>
+          </ul>
+          <h5>Konsep tingkat tinggi:</h5>
+          <p><i>"Internet Instan di Manapun Anda Butuhkan, Tanpa Kontrak, Tanpa Aplikasi."</i>[cite: 2]</p>
+        </div>
+
+        <!-- 9. Unfair Advantage & 5. Channels -->
+        <div style="grid-row: span 2; display: flex; flex-direction: column; gap: 16px;">
+          <div class="canvas-card" style="flex: 1;">
+            <h4>9. Unfair Advantage</h4>
+            <ul>
+              <li>Kecepatan deployment tanpa izin infrastruktur tetap seperti ISP[cite: 2].</li>
+              <li>Kepercayaan lokal melalui agen lapangan yang dikenal di komunitas acara[cite: 2].</li>
+              <li>Biaya operasional jauh lebih rendah dibanding membangun infrastruktur Wi-Fi permanen[cite: 2].</li>
+            </ul>
+          </div>
+          <div class="canvas-card" style="flex: 1;">
+            <h4>5. Channels</h4>
+            <ul>
+              <li>Agen berseragam SpotGo di lokasi acara sebagai titik kontak fisik utama[cite: 2].</li>
+              <li>Standing banner bertuliskan SSID Wi-Fi di lokasi strategis[cite: 2].</li>
+              <li>Notifikasi WhatsApp otomatis sebagai bukti transaksi dan reminder sisa waktu[cite: 2].</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 2. Customer Segments -->
+        <div class="canvas-card" style="grid-row: span 2;">
+          <h4>2. Customer Segments</h4>
+          <ul>
+            <li>Pengunjung konser, festival, bazar, dan acara outdoor[cite: 2].</li>
+            <li>Wisatawan di area susah sinyal[cite: 2].</li>
+            <li>Pekerja lapangan (ojek online, kurir) yang butuh koneksi darurat[cite: 2].</li>
+            <li>Peserta acara kampus dan bootcamp[cite: 2].</li>
+          </ul>
+          <h5>Early Adopters:</h5>
+          <ul>
+            <li>Event organizer yang butuh solusi internet darurat untuk peserta[cite: 2].</li>
+            <li>Komunitas anak muda urban yang aktif di festival dan konser[cite: 2].</li>
+          </ul>
+        </div>
+        
+        <!-- Bottom Row (Cost & Revenue) -->
+        <div class="canvas-card" style="grid-column: 1 / 4;">
+          <h4>7. Cost Structure</h4>
+          <ul>
+            <li>Perangkat per agen: router mobile + baterai portable + modem 4G/5G (Rp2-3 juta)[cite: 2].</li>
+            <li>Kuota data upstream modem agen: Rp100-200 ribu/hari operasional penuh[cite: 2].</li>
+            <li>Pengembangan web captive portal (satu kali): Rp 2-5 juta[cite: 2].</li>
+            <li>Biaya payment gateway QRIS: 0,7% per transaksi[cite: 2].</li>
+          </ul>
+        </div>
+        <div class="canvas-card" style="grid-column: 4 / 6;">
+          <h4>6. Revenue Streams</h4>
+          <ul>
+            <li>Paket 1 Jam: Rp5.000 | 2 Jam: Rp8.000 | 6 Jam: Rp15.000 | 24 Jam: Rp20.000[cite: 2].</li>
+            <li>Estimasi per agen per acara: 50 pengguna x rata-rata Rp8.000 = Rp400.000/hari[cite: 2].</li>
+            <li>Revenue tambahan: kemitraan B2B paket borongan dengan event organizer[cite: 2].</li>
+            <li>Model bagi hasil agen dan platform SpotGo (contoh: 70:30)[cite: 2].</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="reference-box fade-up">
+        <h4>Daftar Pustaka</h4>
+        <p>Saputra, A., & Rachman, F. (2021). Analisis degradasi kinerja jaringan seluler pada pusat keramaian dan event berskala besar di wilayah urban. <i>Jurnal Telekomunikasi dan Jaringan Komputer</i>, 12(3), 210-224[cite: 2].</p>
+        <p>Wibowo, R., Hartono, B., & Setiadi, T. (2022). Implementasi captive portal dan MAC address binding untuk manajemen bandwidth dan otentikasi jaringan publik tanpa aplikasi klien. <i>Jurnal Rekayasa Sistem dan Teknologi Informasi</i>, 6(1), 88-97[cite: 2].</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="background:var(--bg-card);border-top:1px solid var(--border-light);padding:32px 0;">
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+    <a href="ideation.html" style="font-size:14px;color:var(--text-muted);">← Kembali ke Ideasi</a>
+    <a href="testing.html" class="btn-primary">Lanjut ke Pengujian →</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><h3>SDG 9 — Indonesia</h3><p>Proyek edukasi tentang Target 9.c: Akses TIK yang merata di Indonesia.</p></div>
+      <div class="footer-col"><h4>Halaman</h4><a href="index.html">Beranda</a><a href="facts.html">Fakta & Data</a><a href="target.html">Target 9.c</a></div>
+      <div class="footer-col"><h4>Design Thinking</h4><a href="empathy.html">Empati</a><a href="ideation.html">Ideasi</a><a href="testing.html">Pengujian</a><a href="reflection.html">Refleksi</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2024 Proyek SDG 9 Indonesia.</span></div>
+  </div>
+</footer>
+<script>
+  function switchTab(id) {
+    document.querySelectorAll('.proto-tab').forEach((t,i) => t.classList.remove('active'));
+    document.querySelectorAll('.proto-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-'+id).classList.add('active');
+    event.target.classList.add('active');
+  }
+  document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('open'));
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
